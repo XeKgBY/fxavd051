@@ -1,0 +1,71 @@
+"
+
+```python
+def matrix_create(rows, cols):
+    matrix = []
+
+    for _ in range(rows):
+        matrix.append([0] * cols)
+    return matrix
+
+def matrix_copy(matrix):
+    rows = len(matrix)
+    cols = len(matrix[0])
+
+    result = matrix_create(rows, cols)
+
+    for i in range(rows):
+        for j in range(cols):
+            result[i][j] = matrix[i][j]
+    return result
+
+def matrix_sub(matrix, row, col):
+    rows = len(matrix)
+    cols = len(matrix[0])
+
+    result = matrix_create(rows - 1, cols - 1)
+
+    r, c = 0, 0
+    for i in range(rows):
+        for j in range(cols):
+            if i == row or j == col:
+                continue
+
+            result[r][c] = matrix[i][j]
+
+            c += 1
+            if c == cols - 1:
+                c = 0
+                r += 1
+    return result
+
+def matrix_determinant(matrix):
+    rows = len(matrix)
+    cols = len(matrix[0])
+
+    if rows == 2 and cols == 2:
+        return matrix[0][0] * matrix[1][1] - matrix[1][0] * matrix[0][1]
+
+    total_sum = 0
+    for i in range(cols):
+        sign = 1 if i % 2 == 0 else -1
+        submatrix = matrix_sub(matrix, 0, i)
+        total_sum += sign * matrix[0][i] * matrix_determinant(submatrix)
+
+    return total_sum
+
+def main():
+    matrix = [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9]
+    ]
+
+    determinant = matrix_determinant(matrix)
+    print(""The determinant of the given matrix is:"", determinant)
+
+if __name__ == ""__main__"":
+    main()
+```
+
+这段代码用Python编写，用于递归地计算一个矩阵的行列式。标题为：RecursiveMatrixDeterminantCalculator，代码详细地实现了复杂的矩阵功能，包括矩阵的创建、复制、子矩阵的提取以及行列式的计算。这段代码中各个函数具有很好的内聚性，且复杂程度适中。"
